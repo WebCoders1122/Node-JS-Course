@@ -1,1 +1,14 @@
-hello
+total 88
+drwxrwxr-x  4 maan maan  4096 جون     8 12:49 .
+drwxr-xr-x 15 maan maan  4096 جون     8 11:07 ..
+-rw-rw-r--  1 maan maan   118 جون     8 11:57 assignment2.js
+-rw-rw-r--  1 maan maan   213 جون     8 11:57 assignment3.js
+-rw-rw-r--  1 maan maan   411 جون     8 13:00 challange.js
+-rw-rw-r--  1 maan maan   130 جون     8 13:00 doc.txt
+-rw-rw-r--  1 maan maan   886 جون     8 12:41 eventLoop.js
+drwxrwxr-x  8 maan maan  4096 جون     8 12:46 .git
+-rw-rw-r--  1 maan maan    12 جون     8 11:18 .gitignore
+-rw-rw-r--  1 maan maan    31 جون     8 11:12 index.js
+drwxrwxr-x 94 maan maan  4096 جون     8 11:48 node_modules
+-rw-rw-r--  1 maan maan   408 جون     8 12:49 package.json
+-rw-rw-r--  1 maan maan 37852 جون     8 11:57 package-lock.json

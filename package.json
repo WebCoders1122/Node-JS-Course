@@ -4,7 +4,7 @@
   "description": "learning course of node js",
   "main": "index.js",
   "scripts": {
-    "start" : "nodemon eventLoop.js",
+    "start" : "nodemon challange.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "webcoders1122",
