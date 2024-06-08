@@ -4,11 +4,16 @@
   "description": "learning course of node js",
   "main": "index.js",
   "scripts": {
+    "start" : "nodemon assignment3.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "webcoders1122",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "os": "^0.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
   }
 }
