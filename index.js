@@ -9,10 +9,10 @@ const products = data.products;
 const server = http.createServer((req, res) => {
   //   console.log(req.method);
 
-  if (req.url.startsWith("/product")) {
+  if (req.url.startsWith("/product") && req.method === "GET") {
+    if (req.url.split("/").length == 2) return res.end("Products Page");
     let index = req.url.split("/")[2];
     let product = products[index - 1];
-    console.log(product.id);
     console.log("product");
     res.setHeader("Content-Type", "text/html");
     res.writeHead(200);
@@ -22,6 +22,11 @@ const server = http.createServer((req, res) => {
       .replace("**price**", product.price)
       .replace("**description**", product.description);
     res.end(modProductCard);
+    return;
+  } else if (req.url.startsWith("/product") && req.method === "POST") {
+    res.setHeader("Content-Type", "text/html");
+    res.writeHead(200);
+    res.end("This is post request");
     return;
   }
   switch (req.url) {
