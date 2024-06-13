@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 
-//middleweres
+//middlewares
 // app.use("/abc", express.static("public"));
 app.use(express.json());
 // app.use((req, res, next) => {
@@ -59,10 +59,15 @@ app.get("/demo", (req, res) => {
   console.log(queryData);
   res.json(queryData);
 });
+app.post("/demo", (req, res) => {
+  const bodyData = req.body;
+  console.log(bodyData);
+  res.json(bodyData);
+});
 app.get("/demo/:name/:age/:subject", (req, res) => {
-  const queryData = req.params;
-  console.log(queryData);
-  res.json(queryData);
+  const paramsData = req.params;
+  console.log(paramsData);
+  res.json(paramsData);
 });
 app.listen(8080, (error) => {
   if (error) {
