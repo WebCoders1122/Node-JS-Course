@@ -59,6 +59,11 @@ app.get("/demo", (req, res) => {
   console.log(queryData);
   res.json(queryData);
 });
+app.get("/demo/:name/:age/:subject", (req, res) => {
+  const queryData = req.params;
+  console.log(queryData);
+  res.json(queryData);
+});
 app.listen(8080, (error) => {
   if (error) {
     console.log(error);
