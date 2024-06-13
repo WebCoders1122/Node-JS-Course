@@ -26,7 +26,7 @@ const auth = (req, res, next) => {
 
 // app.use(auth);
 
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
 
 //endpoints
 app.get("/", (req, res) => {
@@ -50,6 +50,14 @@ app.delete("/", (req, res) => {
 });
 app.patch("/", (req, res) => {
   res.json({ type: "PATCHH" });
+});
+
+//assignments
+//#1
+app.get("/demo", (req, res) => {
+  const queryData = req.query;
+  console.log(queryData);
+  res.json(queryData);
 });
 app.listen(8080, (error) => {
   if (error) {
