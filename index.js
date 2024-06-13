@@ -26,6 +26,8 @@ const auth = (req, res, next) => {
 
 // app.use(auth);
 
+app.use(express.urlencoded());
+
 //endpoints
 app.get("/", (req, res) => {
   // console.log(req);
@@ -37,6 +39,7 @@ app.get("/", (req, res) => {
   // res.sendStatus(502);
 });
 app.post("/", (req, res) => {
+  console.log(req.body);
   res.json({ type: "POST" });
 });
 app.put("/", auth, (req, res) => {
@@ -48,4 +51,10 @@ app.delete("/", (req, res) => {
 app.patch("/", (req, res) => {
   res.json({ type: "PATCHH" });
 });
-app.listen(8080);
+app.listen(8080, (error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("server Started");
+  }
+});
