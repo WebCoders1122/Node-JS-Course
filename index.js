@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -27,7 +28,7 @@ const auth = (req, res, next) => {
 // app.use(auth);
 
 // app.use(express.urlencoded());
-
+const parser = bodyParser.json();
 //endpoints
 app.get("/", (req, res) => {
   // console.log(req);
@@ -59,7 +60,7 @@ app.get("/demo", (req, res) => {
   console.log(queryData);
   res.json(queryData);
 });
-app.post("/demo", (req, res) => {
+app.post("/demo", parser, (req, res) => {
   const bodyData = req.body;
   console.log(bodyData);
   res.json(bodyData);
