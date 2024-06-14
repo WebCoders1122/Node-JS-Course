@@ -1,75 +1,56 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
+const { quotes } = JSON.parse(fs.readFileSync("data.json", "utf-8"));
 const app = express();
 
-//middlewares
-// app.use("/abc", express.static("public"));
-app.use(express.json());
-// app.use((req, res, next) => {
-//   console.log({
-//     ip: req.ip,
-//     hostname: req.hostname,
-//     query: req.query,
-//     method: req.method,
-//     body: req.body,
-//   });
-//   next();
-// });
-const auth = (req, res, next) => {
-  if (req.body.password === 123) {
-    next();
-  } else {
-    res.sendStatus(401);
-    return;
-  }
-};
+// middlewares
+app.use(bodyParser.json());
 
-// app.use(auth);
-
-// app.use(express.urlencoded());
-const parser = bodyParser.json();
-//endpoints
-app.get("/", (req, res) => {
-  // console.log(req);
-  // res.send("hello");
-  // res.sendFile("/home/maan/Desktop/GitHub/Node JS Course/public/data.json");
-
-  console.log(req.query);
-  res.json({ type: "GET" });
-  // res.sendStatus(502);
-});
-app.post("/", (req, res) => {
+// CRUD = create read update and delete operations || REST APIs
+//#1 = Create
+app.post("/quotes", (req, res) => {
   console.log(req.body);
-  res.json({ type: "POST" });
-});
-app.put("/", auth, (req, res) => {
-  res.json({ type: "PUT" });
-});
-app.delete("/", (req, res) => {
-  res.json({ type: "DELETE" });
-});
-app.patch("/", (req, res) => {
-  res.json({ type: "PATCHH" });
+  quotes.push(req.body);
+  res.status(201).json(req.body);
 });
 
-//assignments
-//#1
-app.get("/demo", (req, res) => {
-  const queryData = req.query;
-  console.log(queryData);
-  res.json(queryData);
+//#2 read
+app.get("/quotes", (req, res) => {
+  res.status(200).json(quotes);
 });
-app.post("/demo", parser, (req, res) => {
-  const bodyData = req.body;
-  console.log(bodyData);
-  res.json(bodyData);
+app.get("/quotes/:id", (req, res) => {
+  const id = req.params.id;
+  let index = quotes.findIndex((quote) => quote.id == id);
+  res.status(200).json(quotes[index]);
 });
-app.get("/demo/:name/:age/:subject", (req, res) => {
-  const paramsData = req.params;
-  console.log(paramsData);
-  res.json(paramsData);
+
+// #3 = put and update
+app.put("/quotes/:id", (req, res) => {
+  const updatedQuote = req.body;
+  const id = req.params.id;
+  const index = quotes.findIndex((q) => q.id == id);
+  quotes.splice(index, 1, updatedQuote);
+  res.status(201, "Replaced").json(updatedQuote);
 });
+app.patch("/quotes/:id", (req, res) => {
+  const quoteUpdate = req.body;
+  const id = req.params.id;
+  const index = quotes.findIndex((q) => q.id == id);
+  const updatedQuote = { ...quotes[index], ...quoteUpdate };
+  quotes.splice(index, 1, updatedQuote);
+  res.status(201, "updated").json(updatedQuote);
+});
+
+//#4 = delete
+app.delete("/quotes/:id", (req, res) => {
+  const index = quotes.findIndex((q) => q.id == req.params.id);
+  const deletedQuote = quotes[index];
+  quotes.splice(index, 1);
+  res.status(202, "Deleted").json(deletedQuote);
+});
+
 app.listen(8080, (error) => {
   if (error) {
     console.log(error);
