@@ -5,6 +5,7 @@ const {
   getOneTask,
   replaceOneTask,
   updateOneTask,
+  deleteOneTask,
 } = require("../controller/task");
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router
   .get("/", getAllTask)
   .get("/:query", getOneTask)
   .put("/:query", replaceOneTask)
-  .patch("/:query", updateOneTask);
+  .patch("/:query", updateOneTask)
+  .delete("/:query", deleteOneTask);
 
 exports.router = router;

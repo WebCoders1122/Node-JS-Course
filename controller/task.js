@@ -48,3 +48,12 @@ exports.updateOneTask = async (req, res) => {
     res.status(400).json(error);
   }
 };
+exports.deleteOneTask = async (req, res) => {
+  const query = req.params.query;
+  try {
+    const doc = await Task.findOneAndDelete({ id: { $eq: query } });
+    res.status(200).json(doc);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
