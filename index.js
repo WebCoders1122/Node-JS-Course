@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const quotesRoutes = require("./routes/quotes");
 const productsRoutes = require("./routes/products");
 const taskRouter = require("./routes/task");
+const userRouter = require("./routes/users");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -13,6 +14,8 @@ app.use(bodyParser.json());
 app.use("/quotes", quotesRoutes.router);
 app.use("/products", productsRoutes.router);
 app.use("/tasks", taskRouter.router);
+app.use("/tasks", taskRouter.router);
+app.use("/users", userRouter.router);
 
 app.listen(process.env.PORT, (error) => {
   if (error) {
