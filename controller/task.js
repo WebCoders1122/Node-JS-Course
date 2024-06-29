@@ -20,8 +20,30 @@ exports.getAllTask = async (req, res) => {
 exports.getOneTask = async (req, res) => {
   const query = req.params.query;
   try {
-    const docs = await Task.findOne({ id: { $eq: query } });
-    res.status(200).json(docs);
+    const doc = await Task.find({ id: { $eq: query } });
+    res.status(200).json(doc);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+exports.replaceOneTask = async (req, res) => {
+  const query = req.params.query;
+  try {
+    const doc = await Task.findOneAndReplace({ id: { $eq: query } }, req.body, {
+      returnDocument: "after",
+    });
+    res.status(200).json(doc);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+exports.updateOneTask = async (req, res) => {
+  const query = req.params.query;
+  try {
+    const doc = await Task.findOneAndUpdate({ id: { $eq: query } }, req.body, {
+      returnDocument: "after",
+    });
+    res.status(200).json(doc);
   } catch (error) {
     res.status(400).json(error);
   }
