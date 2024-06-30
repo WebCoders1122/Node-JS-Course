@@ -1,14 +1,20 @@
+import axios from "axios";
 import { Button, Card } from "flowbite-react";
 import React from "react";
 
-const ProductCard = ({ data }) => {
-  console.log(data);
+const ProductCard = ({ data, products, setProducts }) => {
   const customTheme = {
     button: {
       color: {
         primary: "bg-red-500 hover:bg-red-600 dark:text-white",
       },
     },
+  };
+
+  const handleDelete = async (id) => {
+    const response = await axios.delete(`http://localhost:5500/products/${id}`);
+    setProducts(products.filter((product) => product._id !== id));
+    console.log(response);
   };
   return (
     <Card
@@ -27,7 +33,11 @@ const ProductCard = ({ data }) => {
 
         <Button.Group>
           <Button color='green'>Update</Button>
-          <Button color='red'>Delete</Button>
+          <Button
+            color='red'
+            onClick={() => handleDelete(data._id)}>
+            Delete
+          </Button>
           <Button
             color='info'
             className='px-2.5'>
