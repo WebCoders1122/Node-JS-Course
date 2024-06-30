@@ -11,7 +11,7 @@ function App() {
   };
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [products]);
   return (
     <div>
       {products && products.length
@@ -19,6 +19,8 @@ function App() {
             <ProductCard
               key={product._id}
               data={product}
+              products={products}
+              setProducts={setProducts}
             />
           ))
         : null}
