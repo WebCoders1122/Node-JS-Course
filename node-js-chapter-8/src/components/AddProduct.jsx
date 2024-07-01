@@ -17,10 +17,7 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("submit");
-    const response = await axios.post(
-      "http://localhost:5500/products",
-      product
-    );
+    const response = await axios.post("/products", product);
     setProduct(initialState);
   };
   useEffect(() => {

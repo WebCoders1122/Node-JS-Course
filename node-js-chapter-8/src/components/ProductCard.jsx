@@ -12,7 +12,7 @@ const ProductCard = ({ data, products, setProducts }) => {
   };
 
   const handleDelete = async (id) => {
-    const response = await axios.delete(`http://localhost:5500/products/${id}`);
+    const response = await axios.delete(`/products/${id}`);
     setProducts(products.filter((product) => product._id !== id));
   };
   return (
