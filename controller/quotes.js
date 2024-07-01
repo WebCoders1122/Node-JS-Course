@@ -1,6 +1,3 @@
-const fs = require("fs");
-const { quotes } = JSON.parse(fs.readFileSync("data.json", "utf-8"));
-
 //functions
 exports.create = (req, res) => {
   console.log(req.body);
