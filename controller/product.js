@@ -1,4 +1,6 @@
+const path = require("path");
 const { Product } = require("../model/product");
+const ejs = require("ejs");
 exports.createProduct = async (req, res) => {
   let product = new Product(req.body);
   try {
@@ -12,6 +14,24 @@ exports.getAllProducts = async (req, res) => {
   try {
     const docs = await Product.find();
     res.status(200).json(docs);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+exports.getAllProductsSSR = async (req, res) => {
+  try {
+    const docs = await Product.find();
+    ejs.renderFile(
+      path.resolve(__dirname, "../view/card.ejs"),
+      { products: docs },
+      (err, str) => {
+        if (err) {
+          res.status(400).json(err);
+        } else {
+          res.status(200).send(str);
+        }
+      }
+    );
   } catch (err) {
     res.status(400).json(err);
   }
@@ -48,6 +68,7 @@ exports.updateProduct = async (req, res) => {
 };
 exports.deleteProduct = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   try {
     const doc = await Product.findOneAndDelete({ _id: id });
     res.status(200).json(doc);

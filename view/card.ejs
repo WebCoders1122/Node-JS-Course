@@ -1,0 +1,57 @@
+<style>
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .card button:hover {
+    opacity: 0.7;
+  }
+</style>
+<script>
+  const deleteProduct = async (id) => {
+    console.log(id);
+    let res = await fetch("/products/" + id, { method: "DELETE" });
+    let doc = await res.json();
+    let element = document.getElementById(doc._id);
+    console.log(element);
+    element.remove();
+  };
+</script>
+<% products.map(product=>{ %>
+
+<div
+  class="card"
+  id="<%= product._id %>">
+  <h2 style="text-align: center">Product Card</h2>
+  <img
+    src="<%= product.thumbnail %>"
+    alt="Denim Jeans"
+    style="width: 100%" />
+  <h1><%= product.title %></h1>
+  <p class="price">$<%= product.price %></p>
+  <p><%= product.description %></p>
+  <button onclick="deleteProduct('<%= product._id %>')">Delete</button>
+</div>
+
+<% }) %>
