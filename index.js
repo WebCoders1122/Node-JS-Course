@@ -18,7 +18,6 @@ app.use(express.static(path.resolve(__dirname, "dist")));
 app.use("/quotes", quotesRoutes.router);
 app.use("/products", productsRoutes.router);
 app.use("/tasks", taskRouter.router);
-app.use("/tasks", taskRouter.router);
 app.use("/users", userRouter.router);
 app.use("*", (req, resolve) => {
   resolve.sendFile(path.resolve(__dirname, "dist", "index.html"));
