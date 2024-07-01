@@ -6,7 +6,7 @@
     },
     {
       "src": "dist/**",
-      "use": "@vercel/staticb"
+      "use": "@vercel/static"
     }
   ],
   "routes": [
