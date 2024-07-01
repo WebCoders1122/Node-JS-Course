@@ -6,7 +6,7 @@ import axios from "axios";
 function App() {
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
-    const response = await axios.get("http://localhost:5500/products");
+    const response = await axios.get("/products");
     setProducts(response.data);
   };
   useEffect(() => {
