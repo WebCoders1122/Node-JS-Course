@@ -1,4 +1,32 @@
+const path = require("path");
 const { Quote } = require("../model/quote");
+const ejs = require("ejs");
+const fs = require("fs");
+
+// view functions
+exports.getQoutesSsr = async (req, res) => {
+  const quotes = await Quote.find();
+  const doc = fs.readFileSync(
+    path.resolve(__dirname, "../view/quote.ejs"),
+    "utf-8"
+  );
+  // 1st method
+  // let template = ejs.compile(path.resolve(__dirname, "../view/quote.ejs"));
+  // let finaldoc = template({ quotes: quotes });
+  // res.send(finaldoc);
+
+  // 2nd method
+  // ejs.render(doc, { quotes: quotes });
+  // res.send(ejs.render(doc, { quotes: quotes }));
+
+  ejs.renderFile(
+    path.resolve(__dirname, "../view/quote.ejs"),
+    { quotes: quotes },
+    (err, str) => {
+      res.status(200).send(str);
+    }
+  );
+};
 
 //functions
 exports.create = async (req, res) => {

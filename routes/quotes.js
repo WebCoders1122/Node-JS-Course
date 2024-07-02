@@ -6,6 +6,7 @@ const router = express.Router();
 router
   .post("/", quoteController.create)
   .get("/", quoteController.getAll)
+  .get("/ssr", quoteController.getQoutesSsr)
   .get("/:id", quoteController.getOne)
   .put("/:id", quoteController.replace)
   .patch("/:id", quoteController.update)
