@@ -10,6 +10,11 @@ exports.createProduct = async (req, res) => {
     res.status(400).json(err);
   }
 };
+exports.getForm = async (req, res) => {
+  ejs.renderFile(path.resolve(__dirname, "../view/add.ejs"), (err, str) => {
+    res.status(200).send(str);
+  });
+};
 exports.getAllProducts = async (req, res) => {
   try {
     const docs = await Product.find();

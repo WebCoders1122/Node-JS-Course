@@ -7,6 +7,7 @@ const {
   updateProduct,
   deleteProduct,
   getAllProductsSSR,
+  getForm,
 } = require("../controller/product"); //product.js controller
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router
   .post("/", createProduct)
   .get("/", getAllProducts)
   .get("/ssr", getAllProductsSSR)
+  .get("/add", getForm)
   .get("/:id", getOneProduct)
   .put("/:id", replaceProduct)
   .patch("/:id", updateProduct)

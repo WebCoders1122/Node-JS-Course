@@ -14,6 +14,7 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "dist")));
 app.use("/quotes", quotesRoutes.router);
 app.use("/products", productsRoutes.router);
