@@ -4,8 +4,8 @@ const router = express.Router();
 
 // CRUD = create read update and delete operations || REST APIs
 router
-  .post("", quoteController.create)
-  .get("", quoteController.getAll)
+  .post("/", quoteController.create)
+  .get("/", quoteController.getAll)
   .get("/:id", quoteController.getOne)
   .put("/:id", quoteController.replace)
   .patch("/:id", quoteController.update)
