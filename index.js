@@ -5,9 +5,11 @@ const quotesRoutes = require("./routes/quotes");
 const productsRoutes = require("./routes/products");
 const taskRouter = require("./routes/task");
 const userRouter = require("./routes/users");
+const authRouter = require("./routes/auth");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const { auth } = require("./controller/auth"); //auth middleware from auth controller
 
 const app = express();
 
@@ -16,10 +18,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, "dist")));
-app.use("/quotes", quotesRoutes.router);
-app.use("/products", productsRoutes.router);
-app.use("/tasks", taskRouter.router);
-app.use("/users", userRouter.router);
+app.use("/quotes", auth, quotesRoutes.router);
+app.use("/products", auth, productsRoutes.router);
+app.use("/tasks", auth, taskRouter.router);
+app.use("/users", auth, userRouter.router);
+app.use("/auth", authRouter.router);
 app.use("*", (req, resolve) => {
   resolve.sendFile(path.resolve(__dirname, "dist", "index.html"));
 });

@@ -10,9 +10,9 @@ const addressSchema = new Schema({
 const userSchema = new Schema({
   firstName: { type: String, required: true, maxLength: 16 },
   lastName: { type: String, maxLength: 16 },
+  password: { type: String, minLength: 6, required: true },
   age: {
     type: Number,
-    required: true,
     min: [12, "You are Under Age"],
     max: [100, "You Are over Age"],
   },
@@ -24,7 +24,8 @@ const userSchema = new Schema({
     trim: true,
     match: [/^\S+@\S+\.\S+$/, "Please enter a valid email address"],
   },
-  address: { type: addressSchema, required: true },
+  token: String,
+  address: { type: addressSchema },
 });
 
 exports.User = mongoose.model("User", userSchema);
