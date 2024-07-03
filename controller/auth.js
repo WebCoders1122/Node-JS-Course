@@ -1,11 +1,21 @@
 const { User } = require("../model/user");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
+const path = require("path");
+const bcrypt = require("bcrypt");
 
 exports.signUp = async (req, res) => {
   try {
     const user = new User(req.body);
-    var token = jwt.sign({ email: user.email }, process.env.SECRET_KEY);
+    const privateKey = fs.readFileSync(
+      path.resolve(__dirname, "../private.key")
+    );
+    const token = jwt.sign({ email: user.email }, privateKey, {
+      algorithm: "RS256",
+    });
+    const hash = await bcrypt.hash(req.body.password, 10);
     user.token = token;
+    user.password = hash;
     const doc = await user.save();
     res.status(200, "New User Created").json(token);
   } catch (error) {
@@ -13,16 +23,37 @@ exports.signUp = async (req, res) => {
   }
 };
 
+exports.login = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email });
+    const isAuth = await bcrypt.compare(req.body.password, user.password);
+    if (isAuth) {
+      const privateKey = fs.readFileSync(
+        path.resolve(__dirname, "../private.key")
+      );
+      const token = jwt.sign({ email: user.email }, privateKey, {
+        algorithm: "RS256",
+      });
+      user.token = token;
+      res.send(token);
+    } else {
+      res.sendStatus(401);
+    }
+  } catch (error) {
+    res.status(401).json(error);
+  }
+};
+
 exports.auth = (req, res, next) => {
   try {
     const token = req.headers.authorization.split("Bearer ")[1];
-    //   const decode = jwt.decode(token, process.env.SECRET_KEY);
-    //   console.log(decode);
-    jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
+    const publicKey = fs.readFileSync(path.resolve(__dirname, "../public.key"));
+    jwt.verify(token, publicKey, function (err, decoded) {
       if (decoded.email) {
         next();
       } else {
-        res.sendStatus(401);
+        res.status(401).json(err);
       }
     });
   } catch (error) {
