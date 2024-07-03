@@ -34,6 +34,11 @@ const NavMenu = () => {
             to={"/add"}>
             Add Product
           </Navbar.Link>
+          <Navbar.Link
+            as={NavLink}
+            to={"/login"}>
+            Login
+          </Navbar.Link>
         </div>
       </Navbar.Collapse>
     </Navbar>

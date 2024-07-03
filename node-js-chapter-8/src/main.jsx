@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout.jsx";
 import AddProduct from "./components/AddProduct.jsx";
+import LoginForm from "./components/LoginForm.jsx";
+import NodeContextProvider from "./context/NodeContext";
 
 const Index = () => {
   const router = createBrowserRouter(
@@ -25,6 +27,10 @@ const Index = () => {
           path='/add'
           element={<AddProduct />}
         />
+        <Route
+          path='/login'
+          element={<LoginForm />}
+        />
       </Route>
     )
   );
@@ -33,6 +39,8 @@ const Index = () => {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Index />
+    <NodeContextProvider>
+      <Index />
+    </NodeContextProvider>
   </React.StrictMode>
 );
