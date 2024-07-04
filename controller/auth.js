@@ -36,7 +36,8 @@ exports.login = async (req, res) => {
         algorithm: "RS256",
       });
       user.token = token;
-      res.send(token);
+      res.cookie("uid", token, { maxAge: 60000 });
+      res.sendStatus(200);
     } else {
       res.sendStatus(401);
     }
@@ -47,7 +48,7 @@ exports.login = async (req, res) => {
 
 exports.auth = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split("Bearer ")[1];
+    const token = req.cookies.uid;
     const publicKey = fs.readFileSync(path.resolve(__dirname, "../public.key"));
     jwt.verify(token, publicKey, function (err, decoded) {
       if (decoded.email) {
