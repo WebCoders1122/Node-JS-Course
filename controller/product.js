@@ -16,10 +16,15 @@ exports.getForm = async (req, res) => {
   });
 };
 exports.getAllProducts = async (req, res) => {
+  console.log("get all products");
+  // console.log(req.user, "user");
+  if (!req.user) return res.send(401);
+
   try {
     const docs = await Product.find();
     res.status(200).json(docs);
   } catch (err) {
+    console.log("get all products");
     res.status(400).json(err);
   }
 };
