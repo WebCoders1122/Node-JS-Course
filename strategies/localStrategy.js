@@ -20,7 +20,6 @@ passport.deserializeUser(async (id, done) => {
       console.log("try");
       throw new Error("User not found");
     } else {
-      console.log("else");
       done(null, user);
     }
   } catch (error) {
@@ -45,7 +44,7 @@ exports.strategy = passport.use(
       //   });
       //   user.token = token;
       //   done(null, user);
-      // }
+      // }a
       if (isAuth) {
         done(null, user);
       } else {

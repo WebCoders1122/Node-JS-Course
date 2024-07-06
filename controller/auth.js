@@ -24,6 +24,7 @@ exports.signUp = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  console.log("login");
   try {
     const email = req.body.email;
     const user = await User.findOne({ email: email });
@@ -47,6 +48,7 @@ exports.login = async (req, res) => {
 };
 
 exports.auth = (req, res, next) => {
+  console.log("signup");
   try {
     const token = req.cookies.uid;
     const publicKey = fs.readFileSync(path.resolve(__dirname, "../public.key"));
@@ -60,4 +62,14 @@ exports.auth = (req, res, next) => {
   } catch (error) {
     res.sendStatus(401);
   }
+};
+
+exports.logout = (req, res) => {
+  console.log("logout");
+  req.logout((err) => {
+    if (err) {
+      res.send("Some Error");
+    }
+  });
+  res.send("logged out");
 };

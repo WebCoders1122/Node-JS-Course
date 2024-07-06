@@ -9,7 +9,7 @@ const authRouter = require("./routes/auth");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-const { auth } = require("./controller/auth"); //auth middleware from auth controller
+const { auth, logout, signUp } = require("./controller/auth"); //auth middleware from auth controller
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
@@ -17,10 +17,7 @@ const { strategy } = require("./strategies/localStrategy");
 const { getAllProducts } = require("./controller/product");
 
 const app = express();
-const isAuths = (req, res, next) => {
-  console.log(req.user);
-  //we can make authentication here as well
-};
+
 // middlewares
 app.use(cors());
 app.use(bodyParser.json());
@@ -28,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "express-session-cookie",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
@@ -40,20 +37,15 @@ app.use(express.static(path.resolve(__dirname, "dist")));
 app.use("/quotes", auth, quotesRoutes.router);
 app.use("/products", productsRoutes.router);
 app.use("/tasks", auth, taskRouter.router);
-app.use("/users", auth, userRouter.router);
+app.use("/users", userRouter.router);
 app.use("/auth", authRouter.router);
-app.post("/api/auth", passport.authenticate("local"), (req, res) => {
-  res.send("welcome to website");
-});
-app.get("/api/auth/products", isAuths, getAllProducts);
-app.get("/api/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      res.send("Some Error");
-    }
-  });
-  res.send("logged out");
-});
+// app.get("/logout", logout);
+// app.post("/signup", signUp);
+// app.post("/api/auth", passport.authenticate("local"), (req, res) => {
+//   res.send("welcome to website");
+// });
+// app.get("/api/auth/products", isAuths, getAllProducts);
+
 // app.get("/session", function (req, res, next) {
 //   if (req.session.views) {
 //     req.session.views++;
