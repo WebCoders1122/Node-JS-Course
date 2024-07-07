@@ -9,12 +9,11 @@ const authRouter = require("./routes/auth");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-const { auth, logout, signUp } = require("./controller/auth"); //auth middleware from auth controller
+const { auth } = require("./controller/auth"); //auth middleware from auth controller
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const { strategy } = require("./strategies/localStrategy");
-const { getAllProducts } = require("./controller/product");
 
 const app = express();
 
@@ -23,16 +22,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  session({
-    secret: "express-session-cookie",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(
+//   session({
+//     secret: "express-session-cookie",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false },
+//   })
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(express.static(path.resolve(__dirname, "dist")));
 app.use("/quotes", auth, quotesRoutes.router);
 app.use("/products", productsRoutes.router);

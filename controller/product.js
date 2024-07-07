@@ -16,13 +16,33 @@ exports.getForm = async (req, res) => {
   });
 };
 exports.getAllProducts = async (req, res) => {
-  console.log("get all products");
-  // console.log(req.user, "user");
-  if (!req.user) return res.sendStatus(401);
-
+  const pageSize = 4;
+  console.log(req.query);
+  let query = await Product.find();
   try {
-    const docs = await Product.find();
-    res.status(200).json(docs);
+    if (req.query.sort) {
+      console.log("query");
+      const docs = await Product.find()
+        .sort({
+          [req.query.sort]: req.query.order,
+        })
+        .limit(pageSize)
+        .exec();
+      // console.log(docs);
+      res.status(200).json(docs);
+    } else if (req.query.page) {
+      console.log("page");
+      const docs = await Product.find()
+        .skip(pageSize * (+req.query.page - 1))
+        .limit(pageSize)
+        .exec();
+      console.log(docs);
+      res.status(200).json(docs);
+    } else {
+      console.log("else");
+      const docs = await Product.find();
+      res.status(200).json(docs);
+    }
   } catch (err) {
     console.log("get all products");
     res.status(400).json(err);

@@ -37,7 +37,7 @@ exports.login = async (req, res) => {
         algorithm: "RS256",
       });
       user.token = token;
-      res.cookie("uid", token, { maxAge: 60000 });
+      // res.cookie("uid", token, { maxAge: 60000 });
       res.sendStatus(200);
     } else {
       res.sendStatus(401);
@@ -48,17 +48,22 @@ exports.login = async (req, res) => {
 };
 
 exports.auth = (req, res, next) => {
-  console.log("signup");
+  console.log("auth");
   try {
-    const token = req.cookies.uid;
-    const publicKey = fs.readFileSync(path.resolve(__dirname, "../public.key"));
-    jwt.verify(token, publicKey, function (err, decoded) {
-      if (decoded.email) {
-        next();
-      } else {
-        res.status(401).json(err);
-      }
-    });
+    if (req.user) {
+      next();
+    } else {
+      res.send("please login").status(401);
+    }
+    // const token = req.cookies.uid;
+    // const publicKey = fs.readFileSync(path.resolve(__dirname, "../public.key"));
+    // jwt.verify(token, publicKey, function (err, decoded) {
+    //   if (decoded.email) {
+    //     next();
+    //   } else {
+    //     res.status(401).json(err);
+    //   }
+    // });
   } catch (error) {
     res.sendStatus(401);
   }

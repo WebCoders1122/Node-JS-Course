@@ -2,9 +2,6 @@ const passport = require("passport");
 const { Strategy } = require("passport-local");
 const { User } = require("../model/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
 
 passport.serializeUser((user, done) => {
   done(null, user._id);
